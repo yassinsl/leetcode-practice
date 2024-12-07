@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void	ft_print_nil(t_flags *flags, t_list *list)
+static void	ft_print_nil(unsigned long long nb, t_flags *flags, t_list *list)
 {
 	int	len;
 	int	pad;
@@ -55,7 +55,7 @@ void	ft_print_ptr(unsigned long long nb, t_flags *flags, t_list *list)
 	len = ft_lenhex(nb, 16);
 	if (nb == 0)
 	{
-		ft_print_nil(flags, list);
+		ft_print_nil(nb, flags, list);
 		return ;
 	}
 	if (flags->precision > len)
