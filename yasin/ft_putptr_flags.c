@@ -12,12 +12,16 @@
 
 #include "ft_printf.h"
 
-static void	ft_print_nil(t_flags *flags, t_list *list)
+static void	ft_print_nil(unsigned long long nb, t_flags *flags, t_list *list)
 {
 	int	len;
 	int	pad;
 
 	len = 0;
+	if(!nb && !((flags->flag_pr && flags->precision == 0)))
+		len = ft_strlen("(nil)");
+	else if (flags->flag_pr && flags->precision == 0)
+		len = 0;
 	if (flags->flag_pr && flags->precision == 0)
 		len = 0;
 	else
@@ -41,7 +45,7 @@ static void	ft_print_hex_number(unsigned long long nb, int zeros, int len,
 {
 	if (zeros > 0)
 		ft_print_pad(zeros, '0', list);
-	print_nhex(nb, len, list, "0123456789abncdef");
+	print_nhex(nb, len, list, "0123456789abcdef");
 }
 
 void	ft_print_ptr(unsigned long long nb, t_flags *flags, t_list *list)
@@ -53,7 +57,7 @@ void	ft_print_ptr(unsigned long long nb, t_flags *flags, t_list *list)
 	len = ft_lenhex(nb, 16);
 	if (nb == 0)
 	{
-		ft_print_nil(flags, list);
+		ft_print_nil(nb, flags, list);
 		return ;
 	}
 	if (flags->precision > len)
