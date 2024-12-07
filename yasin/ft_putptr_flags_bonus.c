@@ -5,25 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylahssin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 03:24:57 by ylahssin          #+#    #+#             */
-/*   Updated: 2024/12/06 03:25:01 by ylahssin         ###   ########.fr       */
+/*   Created: 2024/12/07 14:01:01 by ylahssin          #+#    #+#             */
+/*   Updated: 2024/12/07 14:01:04 by ylahssin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_bonus.h"
+#include "ft_printf.h"
 
-static void	ft_print_nil(long long nb, t_flags *flags, t_list *list)
+static void	ft_print_nil(t_flags *flags, t_list *list)
 {
 	int	len;
 	int	pad;
 
 	len = 0;
-	if(!nb && !(flags->flag_pr && flags->precision == 0))
+	if (!nb && !((flags->flag_pr && flags->precision == 0)))
 		len = ft_strlen("(nil)");
 	else if (flags->flag_pr && flags->precision == 0)
 		len = 0;
 	else
-		len = ft_strlen("(nil)");
+		ft_strlen("(nil)");
 	pad = flags->width - len;
 	if (!flags->minus && pad > 0)
 		ft_print_pad(pad, ' ', list);
@@ -55,7 +55,7 @@ void	ft_print_ptr(unsigned long long nb, t_flags *flags, t_list *list)
 	len = ft_lenhex(nb, 16);
 	if (nb == 0)
 	{
-		ft_print_nil(0, flags, list);
+		ft_print_nil(flags, list);
 		return ;
 	}
 	if (flags->precision > len)

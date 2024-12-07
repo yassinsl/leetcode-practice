@@ -6,23 +6,21 @@
 /*   By: ylahssin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 21:24:17 by ylahssin          #+#    #+#             */
-/*   Updated: 2024/12/05 23:56:29 by ylahssin         ###   ########.fr       */
+/*   Updated: 2024/12/07 13:57:48 by ylahssin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_print_nil(unsigned long long nb, t_flags *flags, t_list *list)
+static void	ft_print_nil(t_flags *flags, t_list *list)
 {
 	int	len;
 	int	pad;
 
 	len = 0;
-	if(!nb && !((flags->flag_pr && flags->precision == 0)))
+	if (!nb && !((flags->flag_pr && flags->precision == 0)))
 		len = ft_strlen("(nil)");
 	else if (flags->flag_pr && flags->precision == 0)
-		len = 0;
-	if (flags->flag_pr && flags->precision == 0)
 		len = 0;
 	else
 		ft_strlen("(nil)");
@@ -57,7 +55,7 @@ void	ft_print_ptr(unsigned long long nb, t_flags *flags, t_list *list)
 	len = ft_lenhex(nb, 16);
 	if (nb == 0)
 	{
-		ft_print_nil(nb, flags, list);
+		ft_print_nil(flags, list);
 		return ;
 	}
 	if (flags->precision > len)
