@@ -369,7 +369,8 @@ int main() {
  	// compare_printf("%8.5i", 34);
  	// compare_printf("%10.5i", -216);
  	// compare_printf("%8.5i", 0);
- 	// compare_printf("%8.3i", 8375);
+ 	/test_spdxiucpercent: 6/8 correct functions | bonus_one: 3/3 correct functions | bonus_two: 3/3 correct functions
+/ compare_printf("%8.3i", 8375);
  	// compare_printf("%8.3i", -8473);
  	// compare_printf("%-8.5i", 34);
  	// compare_printf("%-10.5i", -216);
@@ -576,7 +577,7 @@ int main() {
  	// compare_printf(" %.10i ", LONG_MAX);
  	// compare_printf(" %.12i ", UINT_MAX);
  	// compare_printf(" %.13i ", ULONG_MAX);
- 	// compare_printf(" %.14i ", 9223372036854775807LL);
+		// compare_printf(" %.14i ", 9223372036854775807LL);
  	// compare_printf(" % d ", 0);
  	// compare_printf(" % d ", 1);
  	// compare_printf(" % d ", 9);
