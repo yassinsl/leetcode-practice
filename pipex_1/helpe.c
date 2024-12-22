@@ -32,4 +32,47 @@ void execute_pipeline(t_list *commands, char **env) {
     // Parent waits for all child processes
     while (wait(NULL) > 0);
 }
+void execute_pipeline(t_list *commands, s_name *name, int ac, char **env)
+{
+    pid_t pid;
+    int pipes[2];
+    int prev_fd = -1; // Store previous pipe's output
+    int i = 0;
+    char *full_path;
 
+    while (++i < ac - 1 && commands)
+    {
+        pipe(pipes); // Create a new pipe
+        pid = fork();
+        if (pid == 0)
+        {
+            // Child process
+            if (i == 1) // First command: read from input file
+                get_fd(commands, name, i);
+            else if (i == ac - 2) // Last command: write to output file
+                get_fd(commands, name, i);
+            else // Middle commands: read from previous pipe
+                dup2(prev_fd, STDIN_FILENO);
+
+            dup2(pipes[1], STDOUT_FILENO); // Write to current pipe
+            close(pipes[0]);
+            close(pipes[1]);
+
+            // Execute the command
+            full_path = get_path(commands->argv[0], env);
+            if (!full_path)
+                ft_perror("Error: Command not found\n");
+            execve(full_path, commands->argv, env);
+        }
+        else
+        {
+            // Parent process
+            waitpid(pid, NULL, 0); // Wait for child to finish
+            close(pipes[1]);
+            if (prev_fd != -1) // Close previous pipe
+                close(prev_fd);
+            prev_fd = pipes[0]; // Update previous pipe
+        }
+        commands = commands->next; // Move to next command
+    }
+}

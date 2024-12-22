@@ -1,12 +1,20 @@
+#include<unistd.h>
+#include <sys/wait.h>
+#include <sys/wait.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
 
-int main()
+int main(int argc, char ** argv)
 {
-    int fd = open("yassin", O_CREAT | O_RDWR, 0666);
-
-    dup2(fd,1);
-    printf("hello hi");
-    write(1, "d", 1);
-}
+    printf("nik mok\n");
+    int pid = fork();
+    int status;
+    if(!pid)
+    {
+        char *argv[3] = {"ls", "-l", NULL};
+        execv("/bin/ls", argv);
+    }
+    else
+    {
+    //wait(&status);
+    printf("kjkfskjfskjfskjfskjfskjfs");
+}}
