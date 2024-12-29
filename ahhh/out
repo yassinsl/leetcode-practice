@@ -1,0 +1,17 @@
+a.out
+execution.c
+ft_perror.c
+ft_split.c
+ft_strchr.c
+ft_strjoin.c
+ft_strlcpy.c
+ft_strlen.c
+ft_strncmp.c
+fun_helper.c
+getnextline
+libft
+o
+out
+parsing.c
+pipex.c
+pipex.h

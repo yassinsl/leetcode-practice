@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ylahssin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/26 11:35:46 by ylahssin          #+#    #+#             */
+/*   Updated: 2024/12/26 12:07:36 by ylahssin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 static void handle_last_command(t_list *command, s_name *name, int ac)
@@ -66,26 +78,30 @@ static void child_process(t_list *command, s_name *name, char **env, int *pipes_
 static void process_command(t_list *command, s_name *name, char **env, int ac) 
 {
     int pipes_fd[2], prev_fd = -1;
-    pid_t pid;
+    pid_t pid[1024];
     int i = 0;
 
     while (command)
     {
         if (pipe(pipes_fd) == -1)
             ft_perror(PIPE_FAILED, EXIT_FAILURE);
-        pid = fork();
-        if (pid == -1)
+        pid[i] = fork();
+        if (pid[i] == -1)
             ft_perror(FORK_FAILER, EXIT_FAILURE);
-        if (pid == 0)
+        if (pid[i] == 0)
             child_process(command, name, env, pipes_fd, &prev_fd, i, ac);
         
         close_unused_pipes(pipes_fd, &prev_fd);
         command = command->next;
         i++;
     }
-    
-    while (waitpid(-1, NULL, 0) == -1)
+    int count = i;
+    i = 0;
+    while (i < count) {
+        if (waitpid(pid[i++], NULL, 0) == -1) {
             ft_perror(WIATPID_FAILED, EXIT_FAILURE);
+        }
+    }
 }
 
 
