@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -ggdb
 
 SRCS = ft_isdigit.c ft_memcpy.c ft_bzero.c ft_strdup.c \
         ft_substr.c ft_calloc.c ft_isprint.c ft_memmove.c ft_strjoin.c \

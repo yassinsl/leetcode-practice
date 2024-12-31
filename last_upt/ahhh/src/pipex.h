@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include <fcntl.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -37,6 +38,8 @@ typedef struct NAME
 	int			pipe_fd[2];
 	int			per_fd;
 	int			ac;
+	int			pid[1024];
+	int			command_index;
 
 }				t_name;
 
@@ -50,7 +53,7 @@ typedef struct NAME
 # define WAITPID_FAILED "Error: Invalid arguments passed to waitpid.\n"
 # define ERROR_MS_AR "arguments are invalid\n"
 # define FAILER_FD "No such file or directory\n"
-# define LENGHT_PATH 10
+# define LENGHT_PATH 12
 # define DOESNT_EXECUTABLE "Error: Cannot execute file: Permission denied\n"
 # define COMMAND_FAILED "command not found\n"
 # define FAILED_EX "execve: Is a directory\n"
@@ -59,6 +62,7 @@ typedef struct NAME
 # define INVALID_ARGUMENTS "Invalid arguments\n"
 # define RW_FAILER "Read or write failure\n"
 
+void	free_array(char **arr);
 void			handle_last_command(t_list *command, t_name *name);
 void			handle_first_command(t_list *command, t_name *name);
 void			ft_free_all_commands(t_list *node);
@@ -72,6 +76,7 @@ void			ft_perror(char *msg, int num);
 t_list			*tokenize_cmd(char **args, int argc, int is_heredoc);
 void			take_io_file_name(int index, t_name *name, char *args);
 void			process_command(t_list *command, t_name *name);
-void			hna_khdma_process(t_list *command, t_name *name, int *fd);
+void			hna_khdma_process(t_list *command, t_name *name, int *fd,
+					t_list *cmd);
 
 #endif

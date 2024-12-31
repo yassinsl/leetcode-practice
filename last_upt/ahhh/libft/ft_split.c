@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ft_free_last_result(char **result, int position)
+static void	ft_free_last_result(char **result, int position)
 {
 	while (position >= 0)
 		free(result[position--]);

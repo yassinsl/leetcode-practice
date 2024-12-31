@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylahssin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/31 05:06:44 by ylahssin          #+#    #+#             */
-/*   Updated: 2024/12/31 05:06:46 by ylahssin         ###   ########.fr       */
+/*   Created: 2024/12/31 20:17:43 by ylahssin          #+#    #+#             */
+/*   Updated: 2024/12/31 20:17:57 by ylahssin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,25 @@ void	handle_first_command(t_list *command, t_name *name)
 	}
 }
 
-void	execute(t_list *command, t_name *name)
+void	execute(t_list *command, t_name *name, t_list *cmd)
 {
 	char	*full_path;
 
 	full_path = get_path(command->argv[0], name->env);
 	if (!full_path)
 	{
-		ft_free_all_commands(command);
+		ft_free_all_commands(cmd);
+		free(name);
 		ft_perror(COMMAND_FAILED, EXIT_FAILURE);
 	}
-	if (execve(full_path, command->argv, name->env) == -1)
-	{
-		free(full_path);
-		ft_perror(FAILED_EX, EXIT_COMMAND);
-	}
+	execve(full_path, command->argv, name->env);
+	ft_free_all_commands(cmd);
+	free(name);
 	free(full_path);
+	ft_perror(FAILED_EX, EXIT_COMMAND);
 }
 
-void	hna_khdma_process(t_list *command, t_name *name, int *fd)
+void	hna_khdma_process(t_list *command, t_name *name, int *fd, t_list *cmd)
 {
 	if (dup2(command->input, STDIN_FILENO) == -1)
 	{
@@ -71,5 +71,7 @@ void	hna_khdma_process(t_list *command, t_name *name, int *fd)
 	close(command->output);
 	close(command->input);
 	close(name->pipe_fd[0]);
-	execute(command, name);
+	execute(command, name, cmd);
+	ft_free_all_commands(cmd);
+	free(name);
 }

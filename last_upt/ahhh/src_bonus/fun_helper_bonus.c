@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylahssin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/31 05:09:49 by ylahssin          #+#    #+#             */
-/*   Updated: 2024/12/31 05:09:51 by ylahssin         ###   ########.fr       */
+/*   Created: 2024/12/31 20:21:05 by ylahssin          #+#    #+#             */
+/*   Updated: 2024/12/31 20:21:06 by ylahssin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,24 @@ void	ft_free_all_commands(t_list *node)
 
 	while (node)
 	{
-		tmp = node;
-		node = node->next;
-		ft_free_command(tmp);
-		free(tmp);
+		tmp = node->next;
+		ft_free_command(node);
+		free(node);
+		node = tmp;
 	}
-	free(node);
+}
+
+void	free_array(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
 
 char	*ft_strjoin_three(char *s1, char *s2, char *s3)

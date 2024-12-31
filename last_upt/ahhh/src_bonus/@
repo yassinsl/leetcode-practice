@@ -6,7 +6,7 @@
 /*   By: ylahssin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 20:19:00 by ylahssin          #+#    #+#             */
-/*   Updated: 2024/12/31 20:19:36 by ylahssin         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:19:33 by ylahssin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct NAME
 # define INVALID_ARGUMENTS "Invalid arguments\n"
 # define RW_FAILER "Read or write failure\n"
 
-void			free_array(char **arr);
+void	free_array(char **arr);
 void			handle_last_command(t_list *command, t_name *name);
 void			handle_first_command(t_list *command, t_name *name);
 void			ft_free_all_commands(t_list *node);

@@ -6,7 +6,7 @@
 /*   By: ylahssin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 05:25:05 by ylahssin          #+#    #+#             */
-/*   Updated: 2024/12/31 05:25:06 by ylahssin         ###   ########.fr       */
+/*   Updated: 2024/12/31 19:44:39 by ylahssin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ char	*get_direct_path(char *cmd, char **env)
 	else
 	{
 		if (access(cmd, X_OK) == -1)
+		{
 			ft_perror(DOESNT_EXECUTABLE, EXIT_EXV);
+		}
 		return (cmd);
 	}
 }
@@ -68,16 +70,13 @@ char	*get_path_from_env(char *cmd, char **env)
 	{
 		full_path = ft_strjoin_three(dir[i], "/", cmd);
 		if (!full_path)
-		{
-			ft_free_last_result(dir, LENGHT_PATH);
-			return (NULL);
-		}
+			return (free_array(dir), NULL);
 		if (access(full_path, X_OK) != -1)
-			return (full_path);
+			return (free_array(dir), full_path);
 		free(full_path);
 		i++;
 	}
-	ft_free_last_result(dir, LENGHT_PATH);
+	free_array(dir);
 	return (NULL);
 }
 
@@ -98,7 +97,7 @@ t_list	*tokenize_cmd(char **args, int argc, int is_heredoc)
 	while (argc > 1 + is_heredoc)
 	{
 		new_node = malloc(sizeof(t_list));
-		if (!new_node && !head)
+		if (!new_node)
 		{
 			ft_free_all_commands(head);
 			ft_perror(ALL_FAILED, EXIT_FAILURE);

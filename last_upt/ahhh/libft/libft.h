@@ -22,7 +22,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-void	ft_free_last_result(char **result, int position);
 char	*get_next_line(int fd);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strtrim(char const *s1, char const *set);
